@@ -26,6 +26,7 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.TrustManagerFactory;
 
+import com.alipay.remoting.BoltThreadFactory;
 import com.alipay.remoting.config.BoltClientOption;
 import com.alipay.remoting.config.BoltGenericOption;
 import com.alipay.remoting.config.BoltServerOption;
@@ -37,7 +38,6 @@ import org.slf4j.Logger;
 import com.alipay.remoting.Connection;
 import com.alipay.remoting.ConnectionEventHandler;
 import com.alipay.remoting.ConnectionEventType;
-import com.alipay.remoting.NamedThreadFactory;
 import com.alipay.remoting.ProtocolCode;
 import com.alipay.remoting.Url;
 import com.alipay.remoting.codec.Codec;
@@ -78,10 +78,14 @@ public abstract class AbstractConnectionFactory implements ConnectionFactory {
     private static final Logger         logger      = BoltLoggerFactory
                                                         .getLogger(AbstractConnectionFactory.class);
 
-    private static final EventLoopGroup workerGroup = NettyEventLoopUtil.newEventLoopGroup(Runtime
-                                                        .getRuntime().availableProcessors() + 1,
-                                                        new NamedThreadFactory(
-                                                            "bolt-netty-client-worker", true));
+    private static final EventLoopGroup workerGroup = NettyEventLoopUtil
+                                                        .newEventLoopGroup(
+                                                            Runtime.getRuntime()
+                                                                .availableProcessors() + 1,
+                                                            BoltThreadFactory.getInstance()
+                                                                .createThreadFactory(
+                                                                    "bolt-netty-client-worker",
+                                                                    false));
 
     private final Configuration         configuration;
     private final Codec                 codec;

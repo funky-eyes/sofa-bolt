@@ -69,12 +69,17 @@ public class Configs {
     public static final String NETTY_EPOLL_SWITCH                    = "bolt.netty.epoll.switch";
     public static final String NETTY_EPOLL_SWITCH_DEFAULT            = "true";
 
+    /** Netty io uring enabled */
     public static final String NETTY_IO_URING_SWITCH                 = "bolt.netty.io_uring.switch";
     public static final String NETTY_IO_URING_SWITCH_DEFAULT         = "false";
 
     /** Netty epoll level trigger enabled */
     public static final String NETTY_EPOLL_LT                        = "bolt.netty.epoll.lt";
     public static final String NETTY_EPOLL_LT_DEFAULT                = "true";
+
+    /** virtual thread enabled */
+    public static final String GLOBAL_VIRTUAL_THREAD_ENABLED         = "bolt.global.virtual.thread.enabled";
+    public static final String GLOBAL_VIRTUAL_THREAD_ENABLED_DEFAULT = "false";
 
     // ~~~ configs and default values for idle
 

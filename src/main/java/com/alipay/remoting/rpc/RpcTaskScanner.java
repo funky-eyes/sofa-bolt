@@ -23,10 +23,10 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import com.alipay.remoting.AbstractLifeCycle;
+import com.alipay.remoting.BoltThreadFactory;
 import com.alipay.remoting.LifeCycleException;
 import org.slf4j.Logger;
 
-import com.alipay.remoting.NamedThreadFactory;
 import com.alipay.remoting.Scannable;
 import com.alipay.remoting.log.BoltLoggerFactory;
 
@@ -52,8 +52,8 @@ public class RpcTaskScanner extends AbstractLifeCycle {
     public void startup() throws LifeCycleException {
         super.startup();
 
-        scheduledService = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory(
-            "RpcTaskScannerThread", true));
+        scheduledService = new ScheduledThreadPoolExecutor(1, BoltThreadFactory.getInstance()
+            .createThreadFactory("RpcTaskScannerThread", true));
         scheduledService.scheduleWithFixedDelay(new Runnable() {
 
             @Override

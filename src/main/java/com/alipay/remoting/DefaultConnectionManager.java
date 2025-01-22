@@ -158,8 +158,8 @@ public class DefaultConnectionManager extends AbstractLifeCycle implements Conne
         int minPoolSize = ConfigManager.conn_create_tp_min_size();
         int maxPoolSize = ConfigManager.conn_create_tp_max_size();
         this.asyncCreateConnectionExecutor = new ThreadPoolExecutor(minPoolSize, maxPoolSize,
-            keepAliveTime, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(queueSize),
-            new NamedThreadFactory("Bolt-conn-warmup-executor", true));
+            keepAliveTime, TimeUnit.SECONDS, new ArrayBlockingQueue<>(queueSize), BoltThreadFactory.getInstance()
+            .createThreadFactory("Bolt-conn-warmup-executor", true));
     }
 
     @Override

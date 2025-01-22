@@ -66,20 +66,16 @@ public class DefaultConnectionMonitor extends AbstractLifeCycle {
         /* period of schedule task, unit: ms*/
         long period = ConfigManager.conn_monitor_period();
 
-        this.executor = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory(
-            "ConnectionMonitorThread", true), new ThreadPoolExecutor.AbortPolicy());
-        this.executor.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Map<String, RunStateRecordedFutureTask<ConnectionPool>> connPools = null;
-                    if (connectionManager instanceof DefaultConnectionManager) {
-                        connPools = ((DefaultConnectionManager) connectionManager).getConnPools();
-                    }
-                    strategy.monitor(connPools);
-                } catch (Exception e) {
-                    logger.warn("MonitorTask error", e);
+        this.executor = new ScheduledThreadPoolExecutor(1,BoltThreadFactory.getInstance().createThreadFactory(          "ConnectionMonitorThread", true), new ThreadPoolExecutor.AbortPolicy());
+        this.executor.scheduleAtFixedRate(() -> {
+            try {
+                Map<String, RunStateRecordedFutureTask<ConnectionPool>> connPools = null;
+                if (connectionManager instanceof DefaultConnectionManager) {
+                    connPools = ((DefaultConnectionManager) connectionManager).getConnPools();
                 }
+                strategy.monitor(connPools);
+            } catch (Exception e) {
+                logger.warn("MonitorTask error", e);
             }
         }, initialDelay, period, TimeUnit.MILLISECONDS);
     }

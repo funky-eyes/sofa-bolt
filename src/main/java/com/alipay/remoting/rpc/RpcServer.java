@@ -102,18 +102,22 @@ public class RpcServer extends AbstractRemotingServer {
     private final EventLoopGroup                        bossGroup               = NettyEventLoopUtil
                                                                                     .newEventLoopGroup(
                                                                                         1,
-                                                                                        new NamedThreadFactory(
-                                                                                            "Rpc-netty-server-boss",
-                                                                                            false));
+                                                                                        BoltThreadFactory
+                                                                                            .getInstance()
+                                                                                            .createThreadFactory(
+                                                                                                "Rpc-netty-server-boss",
+                                                                                                false));
     /** worker event loop group. Reuse I/O worker threads between rpc servers. */
     private static final EventLoopGroup                 workerGroup             = NettyEventLoopUtil
                                                                                     .newEventLoopGroup(
                                                                                         Runtime
                                                                                             .getRuntime()
                                                                                             .availableProcessors() * 2,
-                                                                                        new NamedThreadFactory(
-                                                                                            "Rpc-netty-server-worker",
-                                                                                            true));
+                                                                                        BoltThreadFactory
+                                                                                            .getInstance()
+                                                                                            .createThreadFactory(
+                                                                                                "Rpc-netty-server-worker",
+                                                                                                true));
 
     /** address parser to get custom args */
     private RemotingAddressParser                       addressParser;

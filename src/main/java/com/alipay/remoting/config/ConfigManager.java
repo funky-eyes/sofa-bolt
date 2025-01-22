@@ -78,6 +78,11 @@ public class ConfigManager {
         return getBool(Configs.NETTY_IO_URING_SWITCH, Configs.NETTY_IO_URING_SWITCH_DEFAULT);
     }
 
+    public static boolean global_virtual_thread_enabled() {
+        return getBool(Configs.GLOBAL_VIRTUAL_THREAD_ENABLED,
+            Configs.GLOBAL_VIRTUAL_THREAD_ENABLED_DEFAULT);
+    }
+
     // ~~~ properties for idle
     public static boolean tcp_idle_switch() {
         return getBool(Configs.TCP_IDLE_SWITCH, Configs.TCP_IDLE_SWITCH_DEFAULT);
