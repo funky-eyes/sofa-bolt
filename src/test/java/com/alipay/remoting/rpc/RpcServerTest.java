@@ -16,10 +16,13 @@
  */
 package com.alipay.remoting.rpc;
 
+import com.alipay.remoting.config.Configs;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.condition.EnabledOnJre;
+import org.junit.jupiter.api.condition.JRE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +51,16 @@ public class RpcServerTest {
 
     @Test
     public void doTestRandomPortConstructor() {
+        RpcServer rpcServer = new RpcServer();
+        rpcServer.startup();
+        Assert.assertNotEquals(0, rpcServer.port());
+        rpcServer.shutdown();
+    }
+
+    @Test
+    @EnabledOnJre({ JRE.JAVA_21, JRE.JAVA_22, JRE.JAVA_23, JRE.JAVA_24 })
+    public void doTestJDK21VT() {
+        System.setProperty(Configs.GLOBAL_VIRTUAL_THREAD_ENABLED, "true");
         RpcServer rpcServer = new RpcServer();
         rpcServer.startup();
         Assert.assertNotEquals(0, rpcServer.port());

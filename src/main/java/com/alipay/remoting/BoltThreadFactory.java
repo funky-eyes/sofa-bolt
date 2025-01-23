@@ -39,8 +39,10 @@ public class BoltThreadFactory {
                 method = virtualThreadBuilder.getClass().getMethod("name", String.class);
                 method.setAccessible(true);
                 virtualThreadBuilder = method.invoke(virtualThreadBuilder, prefix);
+                method = virtualThreadBuilder.getClass().getMethod("factory");
                 method.setAccessible(true);
-                return (ThreadFactory) method.invoke(virtualThreadBuilder);
+               return
+                    (ThreadFactory)method.invoke(virtualThreadBuilder);
             } catch (Exception e) {
                 throw new RuntimeException(
                     "Use virtual thread pool failed, fallback to common thread pool", e);
