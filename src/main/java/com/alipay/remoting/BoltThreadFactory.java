@@ -16,7 +16,6 @@
  */
 package com.alipay.remoting;
 
-import java.lang.reflect.Method;
 import java.util.concurrent.ThreadFactory;
 import com.alipay.remoting.config.ConfigManager;
 
@@ -34,15 +33,7 @@ public class BoltThreadFactory {
     public ThreadFactory createThreadFactory(String prefix, boolean daemon) {
         if (virtualThreadEnabled) {
             try {
-                Method method = Thread.class.getDeclaredMethod("ofVirtual");
-                Object virtualThreadBuilder = method.invoke(null);
-                method = virtualThreadBuilder.getClass().getMethod("name", String.class);
-                method.setAccessible(true);
-                virtualThreadBuilder = method.invoke(virtualThreadBuilder, prefix);
-                method = virtualThreadBuilder.getClass().getMethod("factory");
-                method.setAccessible(true);
-               return
-                    (ThreadFactory)method.invoke(virtualThreadBuilder);
+                return Thread.ofVirtual().name(prefix).factory();
             } catch (Exception e) {
                 throw new RuntimeException(
                     "Use virtual thread pool failed, fallback to common thread pool", e);

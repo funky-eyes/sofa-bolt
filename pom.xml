@@ -77,7 +77,7 @@
         <maven.gpg.pluign>1.5</maven.gpg.pluign>
         <maven.jar.plugin>2.2</maven.jar.plugin>
         <maven.java.formatter.plugin>0.4</maven.java.formatter.plugin>
-        <maven.javadoc.plugin>2.9.1</maven.javadoc.plugin>
+        <maven.javadoc.plugin>3.6.2</maven.javadoc.plugin>
         <maven.source.plugin>3.0.0</maven.source.plugin>
         <maven.staging.plugin>1.6.7</maven.staging.plugin>
         <maven.surefire.argLine></maven.surefire.argLine>
@@ -126,6 +126,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.11.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -320,7 +326,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.6.2</version>
+                <version>${maven.javadoc.plugin}</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
